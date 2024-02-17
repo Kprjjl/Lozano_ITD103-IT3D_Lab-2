@@ -11,6 +11,7 @@ function Users() {
         axios.get('http://localhost:3001/')
             .then(res => {
                 console.log(res);
+                setData(res.data);
             })
             .catch(err => console.log(err));
     }, [])
@@ -30,6 +31,21 @@ function Users() {
                             <th>Action</th>
                         </tr>
                     </thead>
+                    <tbody>
+                        {
+                            data.map((user, index) => {
+                                return <tr key={index}>
+                                    <td>{user.name}</td>
+                                    <td>{user.email}</td>
+                                    <td>{user.age}</td>
+                                    <td>
+                                        <Link to={`/edit/${user._id}`} className="btn btn-sm btn-success me-2">Update</Link>
+                                        <button className="btn btn-sm btn-danger">Delete</button>
+                                    </td>
+                                </tr>
+                            })
+                        }
+                    </tbody>
                 </table>
             </div>
         </div>
