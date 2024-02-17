@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -6,6 +6,7 @@ function Users() {
     const { id } = useParams()
 
     const [data, setData] = useState([])
+    const navigate = useNavigate()
 
     useEffect(() => {
         axios.get('http://localhost:3001/')
@@ -15,6 +16,15 @@ function Users() {
             })
             .catch(err => console.log(err));
     }, [])
+
+    const handleDelete = (id) => {
+        axios.delete('http://localhost:3001/deleteuser/' + id)
+            .then(res => {
+                console.log(res)
+                navigate('/')
+            })
+            .catch(err => console.log(err))
+    }
 
     return (
         <div className="d-flex vh-100 bg-primary justify-content-center align-items-center">
@@ -40,7 +50,7 @@ function Users() {
                                     <td>{user.age}</td>
                                     <td>
                                         <Link to={`/edit/${user._id}`} className="btn btn-sm btn-success me-2">Update</Link>
-                                        <button className="btn btn-sm btn-danger">Delete</button>
+                                        <button onClick={() => handleDelete(user._id)} className="btn btn-sm btn-danger">Delete</button>
                                     </td>
                                 </tr>
                             })
