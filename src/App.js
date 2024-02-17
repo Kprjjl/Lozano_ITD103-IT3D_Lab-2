@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Users from './components/Users';
+import CreateUser from './components/CreateUser';
 
 function App(){
 
@@ -7,6 +8,7 @@ function App(){
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Users />}></Route>
+        <Route path='/create' element={<CreateUser />}></Route>
       </Routes>
     </BrowserRouter>
   );
