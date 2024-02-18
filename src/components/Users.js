@@ -1,4 +1,4 @@
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import SearchBar from "./SearchBar";
@@ -7,7 +7,7 @@ function Users() {
     const { id } = useParams()
 
     const [data, setData] = useState([])
-    const navigate = useNavigate()
+    const [key, setKey] = useState(0)
     const [searchTerm, setSearchTerm] = useState('')
     const [sortField, setSortField] = useState('name')
     const [sortOrder, setSortOrder] = useState('asc')
@@ -19,13 +19,13 @@ function Users() {
                 setData(res.data);
             })
             .catch(err => console.log(err));
-    }, [])
+    }, [key])
 
     const handleDelete = (id) => {
         axios.delete('http://localhost:3001/deleteuser/' + id)
             .then(res => {
                 console.log(res)
-                navigate('/')
+                setKey(prevKey => prevKey + 1)
             })
             .catch(err => console.log(err))
     }
